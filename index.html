@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<title>PUZzzLE</title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<link rel="stylesheet" href="src/css/style.css">
+</head>
+
+<body class="no-select">
+
+	<div class="frame frame-menu full-size show">
+		<div class="button-menu">
+			<input type="file" class="uploader"/>
+		</div>
+	</div>
+	<div class="frame frame-game full-size hide">
+		<canvas class="canvas full-size"></canvas>
+	</div>
+
+	<script id="shader-fs-tex" type="x-shader/x-fragment">
+    	precision mediump float;
+
+    	uniform sampler2D texture;
+		varying vec2 v_texcoord;
+
+		void main(){
+			gl_FragColor = texture2D(texture, v_texcoord);
+		}
+	</script>
+
+    <script id="shader-vs-tex" type="x-shader/x-vertex">
+		attribute vec4 a_position;
+		attribute vec2 a_texcoord;
+		uniform mat4 u_matrix;
+		varying vec2 v_texcoord;
+
+		void main(){
+			gl_Position = u_matrix * a_position;
+			v_texcoord = a_texcoord;	
+		}
+	</script>
+
+	<script id="shader-fs-pos" type="x-shader/x-fragment">
+		precision mediump float;
+    	
+    	varying vec4 v_color;
+
+		void main(){
+			gl_FragColor = v_color;
+		}
+	</script>
+
+    <script id="shader-vs-pos" type="x-shader/x-vertex">
+		attribute vec2 a_coords;
+		uniform vec4 u_color;
+		varying vec4 v_color;
+
+		void main(){
+			v_color = u_color;
+			gl_Position = vec4(a_coords, 0., 1.);	
+		}
+	</script>
+
+
+    <script src="src/js/puzzle/puzzle.js"></script>
+
+    <script src="src/js/puzzle/impl/config.js"></script>
+    <script src="src/js/puzzle/impl/controller.js"></script>
+    <script src="src/js/puzzle/impl/Audio.js"></script>
+
+    <script src="src/js/puzzle/impl/core/core.js"></script>
+    <script src="src/js/puzzle/impl/core/impl/utils.js"></script>
+    <script src="src/js/puzzle/impl/core/impl/Matrix2D.js"></script>
+    <script src="src/js/puzzle/impl/core/impl/Rect.js"></script>
+    <script src="src/js/puzzle/impl/core/impl/PlaceHolder.js"></script>
+
+    <script src="src/js/puzzle/impl/SceneObject/SceneObject.js"></script>
+    <script src="src/js/puzzle/impl/SceneObject/impl/Texture.js"></script>
+    <script src="src/js/puzzle/impl/SceneObject/impl/Puzzle.js"></script>
+
+    <script src="src/js/puzzle/impl/view/view.js"></script>
+
+    <script src="src/js/main.js"></script>
+
+</body>
+
+</html>
